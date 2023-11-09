@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="weight">Weight</label>
+    <input type="text" name="weight" id="weight" placeholder="Enter weight in Kg">
+    <label for="height">Height</label>
+    <input type="text" name="height" id="height" placeholder="Enter height in cm">
+    <button onclick="calculateBMI()">Calculate BMI</button>
+    <h2 id="bmiOutput"></h2>
+    <h2 id="bmiContent"></h2>
+    
+</body>
+<script>
+    
+    function calculateBMI(){
+        const weightElement = document.getElementById('weight');
+        const heightElement = document.getElementById('height');
+        const bmiOutput = document.getElementById('bmiOutput');
+        const bmiContentElement = document.getElementById('bmiContent');
+        
+        if(!heightElement.value){
+            heightElement.style.border = '1px solid red';
+        }
+        if(!weightElement.value){
+            weightElement.style.border = '1px solid red';
+        }
+
+        if(!heightElement.value || !weightElement.value){
+            return;
+        }
+
+        const heightInMeter = Math.pow((heightElement.value/100), 2);
+        const bmiValue = weightElement.value / heightInMeter;
+        
+        bmiOutput.innerText = `Your BMI: ${bmiValue}`;
+        weightElement.value = heightElement.value = '';
+        
+        bmiContentElement.innerText = getBmiContent(bmiValue, bmiContentElement);
+    }
+
+    function getBmiContent(bmiValue, bmiContentElement){
+        
+        let bmiContent = "Normal";
+        if(bmiValue >= 0 && bmiValue < 18.5){
+            bmiContentElement.style.color = "#bc6620"
+            bmiContent = "Under Weight"
+        } else if(bmiValue >= 18.5 && bmiValue < 25){
+            bmiContentElement.style.color = "green"
+            bmiContent = "Normal"
+        } else if(bmiValue >= 25 && bmiValue < 30){
+            bmiContentElement.style.color = "#FFE400"
+            bmiContent = "Over Weight"
+        } else if(bmiValue >= 30){
+            bmiContentElement.style.color = "#8A0101"
+            bmiContent = "Obesity"
+        }
+        return bmiContent;
+    }
+
+</script>
+
+<style>
+
+
+</style>
+</html>
